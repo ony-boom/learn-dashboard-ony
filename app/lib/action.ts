@@ -22,10 +22,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 
-export async function createInvoice(formData: FormData | State) {
-  if (!(formData instanceof FormData)) {
-    return {};
-  }
+export async function createInvoice(formData: FormData & State) {
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get("customerId"),
     amount: formData.get("amount"),
